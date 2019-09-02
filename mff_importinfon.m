@@ -59,11 +59,11 @@ if ~isempty(info) && exist(fullfile(mffFile, [infon  '.xml']))
         catch
         end
         
-        calibAll = info.getCalibrations;
-        if ~isempty(calibAll)
-            for iCalType = 1:calibAll.size
+        impedanceAll = info.getCalibrations;
+        if ~isempty(impedanceAll)
+            for iCalType = 1:impedanceAll.size
 
-                calibList = calibAll.get(iCalType-1); % first on the list is Gain
+                calibList = impedanceAll.get(iCalType-1); % first on the list is Gain
                 if strcmpi(char(calibList.getType()), 'GCAL');
 
 
@@ -82,6 +82,31 @@ if ~isempty(info) && exist(fullfile(mffFile, [infon  '.xml']))
                 end
             end
         end
+        %also get impedances
+        impedanceAll = info.getCalibrations;
+        if ~isempty(impedanceAll)
+            for iCalType = 1:impedanceAll.size
+
+                calibList = impedanceAll.get(iCalType-1); % first on the list is Gain
+                if strcmpi(char(calibList.getType()), 'ICAL')
+
+
+                    if ~isempty(calibList)
+                        impedanceValues = [];
+                        channels    = calibList.getChannels;
+
+                        for iCalib = 1:channels.size
+                            chan = channels.get(iCalib-1);
+                            impedanceValues(iCalib) = str2num(chan.getChannelData());
+                        end
+
+                        infoN.impedance = impedanceValues;
+
+                    end
+                end
+            end
+        end
+
     else
         fprintf( 'Error: Could not load Info resource; file might be corrupted.\n');
     end
