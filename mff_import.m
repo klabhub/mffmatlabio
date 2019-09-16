@@ -346,6 +346,6 @@ if ~isempty(EEG.event)
 end
 
 data = EEG.data;
-event = EEG.event;
+events = EEG.event;
 chanlocs = EEG.chanlocs;
 mff = EEG.etc;
