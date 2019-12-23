@@ -27,7 +27,7 @@
 
 function infoN = mff_importinfon(mffFile, index)
 
-infon = [ 'Info' int2str(index) ];
+infon = [ 'info' int2str(index) ];
 
 p = fileparts(which('mff_importsignal.m'));
 warning('off', 'MATLAB:Java:DuplicateClass');
